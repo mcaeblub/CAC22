@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>BRB</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?<link rel=" preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@535;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+</head>
+
+<body id="review-page">
+
+  <div id="navbar" class="overlay">
+
+    <a href="javascript:void(0)" class="close-button" onclick="closeNav()">&times;</a>
+
+    <div class="overlay-content">
+      <a href="index.html">home</a>
+      <a href="map.html">map</a>
+      <a href="reviews.html">create a review</a>
+      <a href="previous-reviews.html">previous reviews</a>
+      <a href="resources.html">resources</a>
+    </div>
+
+  </div>
+
+  <span class="open-button" onclick="openNav()">&#9776;</span>
+
+  <div id="previous-reviews">
+    <h2 class="center">Previous reviews</h2>
+
+    <hr class="center divider">
+
+    <div id="filter-system">
+      <button class="filter active" onclick="filterSelection('all')"> #all</button>
+      <button class="filter" onclick="filterSelection('is-wheelchair-accessible')"> #wheelchair-accessible</button>
+      <button class="filter" onclick="filterSelection('not-wheelchair-accessible')"> #not-wheelchair-accessible</button>
+      <button class="filter" onclick="filterSelection('is-gender-neutral')"> #gender-neutral</button>
+      <button class="filter" onclick="filterSelection('not-gender-neutral')"> #not-gender-neutral</button>
+      <button class="filter" onclick="filterSelection('offers-feminine-hygiene-products')"> #offers-feminine-hygiene-products</button>
+      <button class="filter" onclick="filterSelection('no-feminine-hygiene-products')"> #no-feminine-hygiene-products</button>
+    </div>
+
+    <div id="reviews-container">
+    </div>
+  </div>
+
+</body>
+
+</html>
+
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+
+<script>
+  function openNav() {
+    document.getElementById("navbar").style.height = "100%";
+  }
+
+  function closeNav() {
+    document.getElementById("navbar").style.height = "0%";
+  }
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwMpIYaVCphaw6SrQcNib4HBWUDkywnOI",
+    authDomain: "bathroom-b09ae.firebaseapp.com",
+    databaseURL: "https://bathroom-b09ae-default-rtdb.firebaseio.com",
+    projectId: "bathroom-b09ae",
+    storageBucket: "bathroom-b09ae.appspot.com",
+    messagingSenderId: "296427877551",
+    appId: "1:296427877551:web:5ea404aea6c2dc778fd05a",
+    measurementId: "G-1XW5J9ZZ35"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  var messagesRef = firebase.database()
+    .ref('Collected Data');
+
+  // filter system
+  filterSelection("all");
+  function filterSelection(c) {
+    var x, i;
+    x = document.getElementsByClassName("completed-review");
+    if (c == "all") c = "";
+    for (i = 0; i < x.length; i++) {
+      removeClass(x[i], "show");
+      if (x[i].className.indexOf(c) > -1) addClass(x[i], "show");
+    }
+  }
+  
+  function addClass(element, name) {
+    var i, arr1, arr2;
+    arr1 = element.className.split(" ");
+    arr2 = name.split(" ");
+    for (i = 0; i < arr2.length; i++) {
+      if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+    }
+  }
+  
+  function removeClass(element, name) {
+    var i, arr1, arr2;
+    arr1 = element.className.split(" ");
+    arr2 = name.split(" ");
+    for (i = 0; i < arr2.length; i++) {
+      while (arr1.indexOf(arr2[i]) > -1) {
+        arr1.splice(arr1.indexOf(arr2[i]), 1);     
+      }
+    }
+    element.className = arr1.join(" ");
+  }
+  
+  // Add active class to the current button (highlight it)
+  var btnContainer = document.getElementById("filter-system");
+  var btns = btnContainer.getElementsByClassName("filter");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function(){
+      var current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+      this.className += " active";
+    });
+  }
+
+  // display
+  messagesRef.orderByChild('name').on('child_added', (snapshot) => {
+    // review itself
+    const completedReview = document.createElement('div');
+    completedReview.className = 'completed-review';
+
+    // line break
+    const br1 = document.createElement('br');
+    const br2 = document.createElement('br');
+    const br3 = document.createElement('br');
+    const br4 = document.createElement('br');
+
+    // reviewer name
+    const reviewer = document.createElement('span');
+    reviewer.appendChild(document.createTextNode(snapshot.val().name));
+    reviewer.className = ('reviewer');
+
+    // bathroom reviewed
+    const bathroomReviewed = document.createElement('span');
+    bathroomReviewed.appendChild(document.createTextNode("Location: " +
+      snapshot.val().bathroom));
+    bathroomReviewed.className = ('bathroom-reviewed');
+
+    // information about bathroom
+    const bathroomInfo = document.createElement('span');
+    bathroomInfo.appendChild(document.createTextNode('Bathroom details: '));
+    if (snapshot.val().accessible == true) {
+      bathroomInfo.appendChild(document.createTextNode('#wheelchair-accessible '));
+      completedReview.classList.add('is-wheelchair-accessible');
+    }
+    else if (snapshot.val().accessible == false) {
+      bathroomInfo.appendChild(document.createTextNode('#not-wheelchair-accessible '));
+      completedReview.classList.add('not-wheelchair-accessible');
+    }
+    if (snapshot.val().gneutral == true) {
+      bathroomInfo.appendChild(document.createTextNode('#gender-neutral '));
+      completedReview.classList.add('is-gender-neutral');
+    }
+    else if (snapshot.val().gneutral == false) {
+      bathroomInfo.appendChild(document.createTextNode('#not-gender-neutral '));
+      completedReview.classList.add('not-gender-neutral');
+    }
+    if (snapshot.val().femp == true) {
+      bathroomInfo.appendChild(document.createTextNode('#offers-feminine-hygiene-products'));
+      completedReview.classList.add('offers-feminine-hygiene-products');
+    }
+    else if (snapshot.val().femp == false) {
+      bathroomInfo.appendChild(document.createTextNode('#no-feminine-hygiene-products'));
+      completedReview.classList.add('no-feminine-hygiene-products');
+    }
+    bathroomInfo.className = ('bathroom-info');
+
+    // content of review
+    const reviewContent = document.createElement('span');
+    reviewContent.appendChild(document.createTextNode(snapshot.val().review));
+    reviewContent.className = ('review-content');
+
+    // add to div
+    completedReview.appendChild(reviewer);
+    completedReview.appendChild(br1);
+    completedReview.appendChild(bathroomReviewed);
+    completedReview.appendChild(br2);
+    completedReview.appendChild(bathroomInfo);
+    completedReview.appendChild(br3);
+    completedReview.appendChild(br4);
+    completedReview.appendChild(reviewContent);
+
+    // add to HTML div
+    document.getElementById('reviews-container').appendChild(completedReview);
+  });
+</script>
