@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>BRB</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?      
+      family=Poppins:wght@500&family=Work+Sans:wght@500&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?  
+    family=Roboto:wght@300&display=swap" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@535;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div id="navbar" class="overlay">
+
+    <a href="javascript:void(0)" class="close-button" onclick="closeNav()">&times;</a>
+
+    <div class="overlay-content">
+      <a href="index.html">home</a>
+      <a href="map.html">map</a>
+      <a href="reviews.html">create a review</a>
+      <a href="previous-reviews.html">previous reviews</a>
+      <a href="resources.html">resources</a>
+    </div>
+
+  </div>
+
+  <span class="open-button" onclick="openNav()">&#9776;</span>
+  
+  <h1>UW Bathroom Map</h1>
+
+  <div id="map">
+    <iframe 
+      src="https://www.google.com/maps/d/embed?mid=1QOD8TknB0Cpz73OVwgpjzf5lC315VgU&ehbc=2E312F" 
+      width="640" height="480">
+    </iframe>
+  </div>
+  
+</body>
+
+</html>
+
+<script>
+  function openNav() {
+    document.getElementById("navbar").style.height = "100%";
+  }
+
+  function closeNav() {
+    document.getElementById("navbar").style.height = "0%";
+  }
+</script>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwMpIYaVCphaw6SrQcNib4HBWUDkywnOI",
+    authDomain: "bathroom-b09ae.firebaseapp.com",
+    projectId: "bathroom-b09ae",
+    storageBucket: "bathroom-b09ae.appspot.com",
+    messagingSenderId: "296427877551",
+    appId: "1:296427877551:web:5ea404aea6c2dc778fd05a",
+    measurementId: "G-1XW5J9ZZ35"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
