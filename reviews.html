@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>BRB</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?<link rel=" preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@535;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+</head>
+
+<body id="review-page">
+
+  <div id="navbar" class="overlay">
+
+    <a href="javascript:void(0)" class="close-button" onclick="closeNav()">&times;</a>
+
+    <div class="overlay-content">
+      <a href="index.html">home</a>
+      <a href="map.html">map</a>
+      <a href="reviews.html">create a review</a>
+      <a href="previous-reviews.html">previous reviews</a>
+      <a href="resources.html">resources</a>
+    </div>
+
+  </div>
+
+  <span class="open-button" onclick="openNav()">&#9776;</span>
+
+  <h1>Bathroom Reviews</h1>
+
+  <div id="form">
+    <form id="review-form" name="form">
+      <h2 class="center">Create a review</h2>
+      <hr class="center divider">
+      <h3>Write a review on any UW bathroom!</h3>
+
+      <span>Reviewer name</span>
+      </br>
+      <input type="text" class="text-box" id="name" name="name2" required>
+
+      </br>
+      </br>
+
+      <span>Bathroom</span>
+      </br>
+      <select id="bathroom" class="input-box" name="bathroom2" required>
+        <option value="">select an option</option>
+        <option value="Art Building (ART)">Art Building (ART)</option>
+        <option value="Burke Museum">Burke Museum</option>
+        <option value="Brooklyn Building">Brooklyn Building</option>
+        <option value="Engineering Library">Engineering Library</option>
+        <option value="Fishery Science Building (FSH)">Fishery Science Building (FSH)</option>
+        <option value="Gould Hall">Gould Hall</option>
+        <option value="Husky Union Building (HUB)">Husky Union Building (HUB)</option>
+        <option value="Hughes Penthouse Theatre (HPT)">Hughes Penthouse Theatre (HPT)</option>
+        <option value="Meany Hall">Meany Hall</option>
+        <option value="Mechanical Engineering Building (MEB)">Mechanical Engineering Building (MEB)</option>
+        <option value="Ocean Sciences Building (OCN)">Ocean Sciences Building (OCN)</option>
+        <option value="Ocean Teaching Building (OTB)">Ocean Teaching Building (OTB)</option>
+        <option value="Physical Plant Office">Physical Plant Office</option>
+        <option value="School of Social Work (SSW)">School of Social Work (SSW)</option>
+        <option value="William H. Gates Hall (LAW)">William H. Gates Hall (LAW)</option>
+
+      </select>
+
+      </br>
+      </br>
+
+
+      <span class="hoverable"
+        data-hover="This means that a wheelchair user can easily find, enter, and exit a bathroom. It also means that a bathroom contains wheelchair user-designated stalls.">Is
+        this bathroom wheelchair-accessible?</span>
+      </br>
+      <input id="wheelchair-accessible" name="accessibility" type="radio" required><label class="radio-button">yes
+         </label>
+      <input id="not-wheelchair-accessible" name="accessibility" type="radio" required><label class="radio-button">no
+         </label>
+
+      </br>
+      </br>
+
+      <span class="hoverable"
+        data-hover="This means that a bathroom isn't exclusively for a single biological gender; anyone can use it.">Is
+        this bathroom gender-netural?</span>
+      </br>
+      <input id="yes-gender-neutral" name="gender-neutral" type="radio" reqyured><label class="radio-button">yes
+         </label><input id="not-gender-neutral" name="gender-neutral" type="radio" required><label
+        class="radio-button">no  </label>
+      </br>
+      </br>
+
+      <span class="hoverable" id="bigger"
+        data-hover="This means that a bathroom offers free pads, tampons, and other essential feminine hygeine products.">Does
+        this bathroom offer feminine hygiene products?</span>
+      </br>
+      <input id="offers-feminine-hygiene-products" name="feminine-hygiene-products" type="radio" required><label
+        class="radio-button">yes  </label><input id="no-feminine-hygiene-products" name="feminine-hygiene-products"
+        type="radio" required><label class="radio-button">no  </label>
+
+      </br>
+      </br>
+
+      <span>Review</span>
+      </br>
+      <textarea id="review" class="input-box" name="review2" rows="4" cols="50" required></textarea>
+
+      </br>
+      </br>
+
+      <button id="submit-form">submit</button>
+    </form>
+
+    <div id="confirmation-container">
+    </div>
+  </div>
+
+</body>
+
+</html>
+
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+
+<script>
+  function openNav() {
+    document.getElementById("navbar").style.height = "100%";
+  }
+
+  function closeNav() {
+    document.getElementById("navbar").style.height = "0%";
+  }
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwMpIYaVCphaw6SrQcNib4HBWUDkywnOI",
+    authDomain: "bathroom-b09ae.firebaseapp.com",
+    databaseURL: "https://bathroom-b09ae-default-rtdb.firebaseio.com",
+    projectId: "bathroom-b09ae",
+    storageBucket: "bathroom-b09ae.appspot.com",
+    messagingSenderId: "296427877551",
+    appId: "1:296427877551:web:5ea404aea6c2dc778fd05a",
+    measurementId: "G-1XW5J9ZZ35"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  var messagesRef = firebase.database()
+    .ref('Collected Data');
+
+  document.getElementById('review-form').addEventListener('submit', submitForm);
+
+  function submitForm(e) {
+    e.preventDefault();
+
+    // Get values
+    var name = getInputVal('name');
+    var bathroom = getInputVal('bathroom');
+    var review = getInputVal('review');
+    if (getCheckedVal("wheelchair-accessible").checked) {
+      var accessible = true;
+    }
+    if (getCheckedVal("not-wheelchair-accessible").checked) {
+      var accessible = false;
+    }
+    if (getCheckedVal("yes-gender-neutral").checked) {
+      var gneutral = true;
+    }
+    if (getCheckedVal("not-gender-neutral").checked) {
+      var gneutral = false;
+    }
+    if (getCheckedVal("offers-feminine-hygiene-products").checked) {
+      var femp = true;
+    }
+    if (getCheckedVal("no-feminine-hygiene-products").checked) {
+      var femp = false;
+    }
+
+    saveMessage(name, bathroom, accessible, review, gneutral, femp);
+    document.getElementById('review-form').reset();
+
+    // confirmation
+    alert('Your review has been submitted. You can view it on the previous reviews page.');
+  }
+
+  // Function to get form values
+  function getInputVal(id) {
+    return document.getElementById(id).value;
+  }
+
+  // function to see if something's checked
+  function getCheckedVal(id) {
+    return document.getElementById(id);
+  }
+
+  // Save message to firebase
+  function saveMessage(name, bathroom, accessible, review, gneutral, femp) {
+    var newMessageRef = messagesRef.push();
+    newMessageRef.set({
+      name: name,
+      bathroom: bathroom,
+      accessible: accessible,
+      review: review,
+      gneutral: gneutral,
+      femp: femp
+    });
+  }
+</script>
